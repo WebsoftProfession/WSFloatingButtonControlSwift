@@ -1,0 +1,16 @@
+PODS:
+  - WSFloatingButtonControlSwift (0.1.0)
+
+DEPENDENCIES:
+  - WSFloatingButtonControlSwift (from `../`)
+
+EXTERNAL SOURCES:
+  WSFloatingButtonControlSwift:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  WSFloatingButtonControlSwift: 26a50b5bc7d2234c2c9400dc43a3e9d0176e4906
+
+PODFILE CHECKSUM: c0fdc399650003551f42385eb984e80e0f6014c2
+
+COCOAPODS: 1.11.3

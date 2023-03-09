@@ -16,15 +16,16 @@ public protocol WSFloatingButtonDelegate {
 
 
 public class WSFloatingControl: UIView {
-    var image: String = ""
-    var edgeInset = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
-    var optionView: WSFloatingOptionView?
+    
+    private var optionView: WSFloatingOptionView?
     private var imgView: UIImageView!
+    private var isShowOption = false
     
-    var isShowOption = false
-    
+    public var increaseRadiusSpeedBy: Double = 0.0
     public var delegate: WSFloatingButtonDelegate?
-    var radiousColor: UIColor = UIColor.init(red: 245.0/255, green: 114.0/255, blue: 51.0/255, alpha:1.0)
+    public var radiousColor: UIColor = UIColor.init(red: 245.0/255, green: 114.0/255, blue: 51.0/255, alpha:1.0)
+    public var image: String = ""
+    public var edgeInset = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
     
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -57,6 +58,7 @@ public class WSFloatingControl: UIView {
             self.optionView?.center = CGPoint.init(x: self.center.x, y: self.center.y - rect.height)
             self.optionView?.radiousColor = self.radiousColor
             self.optionView?.delegate = self.delegate
+            self.optionView?.radiusSpeedBy = self.increaseRadiusSpeedBy
             self.optionView?.options = self.delegate?.viewsForFloatingButtonOptions() ?? []
             self.superview?.addSubview(self.optionView!)
             self.superview?.bringSubviewToFront(self)
@@ -64,6 +66,11 @@ public class WSFloatingControl: UIView {
     }
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        if self.optionView!.isRunning {
+            return
+        }
+        
         if !isShowOption {
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {
                 self.imgView.transform = CGAffineTransform.init(rotationAngle: .pi/4)

@@ -12,20 +12,21 @@ import WSFloatingButtonControlSwift
 class ViewController: UIViewController {
     
     @IBOutlet var floatingButton: WSFloatingControl!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        //        floatingButton.image = "icon_close"
-        //        floatingButton.radiousColor = .black
-                floatingButton.delegate = self
+        floatingButton.image = "icon_close"
+        floatingButton.radiousColor = .red
+        floatingButton.increaseRadiusSpeedBy = 0.1
+        floatingButton.delegate = self
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
 }
 
 extension ViewController: WSFloatingButtonDelegate {

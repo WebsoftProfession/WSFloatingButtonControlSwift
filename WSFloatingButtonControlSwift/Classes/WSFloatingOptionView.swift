@@ -30,7 +30,8 @@ class WSFloatingOptionView: WSFloatingControl {
     private var timer: Timer?
     
     private var activeArcRadius = 0.0
-    
+    var isRunning: Bool = false
+    var radiusSpeedBy: Double = 0.0
 //    var radiousColor: UIColor = .black
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -43,7 +44,9 @@ class WSFloatingOptionView: WSFloatingControl {
         
         if shouldDrawBackground {
             if isReverse {
-                backgroundPaths.removeLast()
+                if backgroundPaths.count > 0 {
+                    backgroundPaths.removeLast()
+                }
                 for path in backgroundPaths {
 //                    UIColor.init(red: 245.0/255, green: 114.0/255, blue: 51.0/255, alpha:path.alphaValue == 0 ? 0.005 : path.alphaValue).setStroke()
                     radiousColor.withAlphaComponent(path.alphaValue == 0 ? 0.005 : path.alphaValue).setStroke()
@@ -59,7 +62,8 @@ class WSFloatingOptionView: WSFloatingControl {
             var alphaRatio =  activeArcRadius / (rect.width / (isReverse ? 1.5 : 1.9))
             alphaRatio = 0.9-alphaRatio
             UIColor.init(red: 0, green: 0, blue: 0, alpha:alphaRatio == 0 ? 0.05 : alphaRatio).setStroke()
-            outlineAreaPath1.lineWidth = isReverse ? activeArcRadius : 1
+            outlineAreaPath1.lineWidth = isReverse ? activeArcRadius : 1 + radiusSpeedBy
+//            outlineAreaPath1.lineWidth = 1
             
             backgroundPaths.append(ShadowPath.init(alphaValue: alphaRatio, path: outlineAreaPath1))
             
@@ -138,6 +142,11 @@ class WSFloatingOptionView: WSFloatingControl {
     }
     
     func drawBackground(isDraw: Bool){
+        
+        if !isRunning {
+            isRunning = true
+        }
+        
         self.isReverse = !isDraw
         
         if isReverse {
@@ -148,7 +157,7 @@ class WSFloatingOptionView: WSFloatingControl {
             timer?.invalidate()
             timer = nil
         }
-        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(runAnimation), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.00000001, target: self, selector: #selector(runAnimation), userInfo: nil, repeats: true)
     }
     
     @objc private func runAnimation(){
@@ -160,10 +169,11 @@ class WSFloatingOptionView: WSFloatingControl {
         if isReverse {
             value = 0
             if backgroundPaths.count != 0  {
-                activeArcRadius -= 1
+                activeArcRadius -= (1 + radiusSpeedBy)
                 self.setNeedsDisplay()
             }
             else{
+                isRunning = false
                 timer?.invalidate()
                 activeArcRadius = 0
                 self.shouldDrawBackground = false
@@ -171,10 +181,11 @@ class WSFloatingOptionView: WSFloatingControl {
         }
         else{
             if activeArcRadius < value {
-                activeArcRadius += 1
+                activeArcRadius += (1 + radiusSpeedBy)
                 self.setNeedsDisplay()
             }
             else{
+                isRunning = false
                 timer?.invalidate()
                 self.shouldDrawBackground = false
             }
@@ -189,7 +200,7 @@ class WSFloatingOptionView: WSFloatingControl {
             for i in 0..<paths.count {
                 if paths[i].position.contains(location) {
 //                    self.delegate?.floatingOptionDidTapped(option: options[i])
-                    UIView.animate(withDuration: 0.1,
+                    UIView.animate(withDuration: 0.01,
                         animations: {
                         self.options[i].transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                         },

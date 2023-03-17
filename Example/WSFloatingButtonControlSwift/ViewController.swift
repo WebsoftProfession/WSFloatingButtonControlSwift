@@ -40,7 +40,7 @@ extension ViewController: WSFloatingButtonDelegate {
     }
     
     func floatingOptionDidTapped(option: WSFloatingOption) {
-        
+        print(option.id)
     }
 }
 

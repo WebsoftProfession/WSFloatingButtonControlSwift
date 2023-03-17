@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WSFloatingButtonControlSwift'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A raised floating animated button control.'
   s.swift_version = '5.0'
 # This description is used to generate tags and improve search results.

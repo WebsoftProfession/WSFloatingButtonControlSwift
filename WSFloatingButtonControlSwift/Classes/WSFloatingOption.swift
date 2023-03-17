@@ -9,9 +9,9 @@ import UIKit
 
 public class WSFloatingOption: UIView {
 
-    
-    var title: String = ""
-    var image: String = ""
+    public let id = UUID()
+    public var title: String = ""
+    public var image: String = ""
     var width: Int = 60
     var edgeInset = UIEdgeInsets.init(top: 0, left: 10, bottom: 10, right: 10)
     var font: UIFont

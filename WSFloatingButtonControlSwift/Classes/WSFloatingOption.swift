@@ -9,7 +9,7 @@ import UIKit
 
 public class WSFloatingOption: UIView {
 
-    public let id = UUID()
+    public var id = UUID()
     public var title: String = ""
     public var image: String = ""
     var width: Int = 60

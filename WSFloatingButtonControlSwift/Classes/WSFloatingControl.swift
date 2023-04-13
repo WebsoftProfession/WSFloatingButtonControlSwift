@@ -72,6 +72,7 @@ public class WSFloatingControl: UIView {
         }
         
         if !isShowOption {
+            self.optionView?.isHidden = false
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {
                 self.imgView.transform = CGAffineTransform.init(rotationAngle: .pi/4)
             }, completion: { _ in
@@ -116,7 +117,7 @@ public class WSFloatingControl: UIView {
                 let view = self.optionView!.options[i]
                 CATransaction.begin()
                 CATransaction.setCompletionBlock({
-                    view.isHidden = true
+                    self.optionView?.isHidden = true
                 })
                 
                 if let path = self.optionView?.paths[i] {

@@ -55,6 +55,7 @@ public class WSFloatingControl: UIView {
         if self.optionView == nil {
             self.optionView = WSFloatingOptionView.init(frame: CGRect.init(x: 0, y: 0, width: rect.width * 4, height: rect.height * 2))
             self.optionView?.backgroundColor = .clear
+            self.optionView?.isHidden = true
             self.optionView?.center = CGPoint.init(x: self.center.x, y: self.center.y - rect.height)
             self.optionView?.radiousColor = self.radiousColor
             self.optionView?.delegate = self.delegate

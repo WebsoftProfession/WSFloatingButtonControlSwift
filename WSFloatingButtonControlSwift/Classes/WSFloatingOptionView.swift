@@ -157,7 +157,7 @@ class WSFloatingOptionView: WSFloatingControl {
             timer?.invalidate()
             timer = nil
         }
-        timer = Timer.scheduledTimer(timeInterval: 0.00000001, target: self, selector: #selector(runAnimation), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(runAnimation), userInfo: nil, repeats: true)
     }
     
     @objc private func runAnimation(){

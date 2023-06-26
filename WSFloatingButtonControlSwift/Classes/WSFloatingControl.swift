@@ -21,6 +21,10 @@ public class WSFloatingControl: UIView {
     private var imgView: UIImageView!
     private var isShowOption = false
     
+    public var isOptionsVisible: Bool {
+        return isShowOption
+    }
+    
     public var increaseRadiusSpeedBy: Double = 0.0
     public var delegate: WSFloatingButtonDelegate?
     public var radiousColor: UIColor = UIColor.init(red: 245.0/255, green: 114.0/255, blue: 51.0/255, alpha:1.0)
@@ -71,7 +75,10 @@ public class WSFloatingControl: UIView {
         if self.optionView!.isRunning {
             return
         }
-        
+        toggleFloatingButtonControl()
+    }
+    
+    public func toggleFloatingButtonControl(){
         if !isShowOption {
             self.optionView?.isHidden = false
             UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.2, initialSpringVelocity: 5, options: .curveEaseInOut, animations: {
@@ -139,8 +146,8 @@ public class WSFloatingControl: UIView {
             
             
         }
-        
     }
+    
     
     func handleOptionTap(option: WSFloatingOption){
         self.delegate?.floatingOptionDidTapped(option: option)
